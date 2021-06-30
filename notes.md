@@ -2,6 +2,7 @@
 
 ### for reading qr codes:
 opencv (needs lots of dependancies. TODO: document)
+
 https://pypi.org/project/opencv-python/ 
 
 ### for talking to sonos:
