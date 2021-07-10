@@ -14,3 +14,5 @@ Thinking about the QR code reader process
   * eg: 1: You're Welcome; 2: Mickey Mouse Clubhouse
 * cards are printed with qrcode for 1, 2, 3 and picture of the song
 
+### face recognition
+https://towardsdatascience.com/building-a-face-recognizer-in-python-7fd6630c6340
