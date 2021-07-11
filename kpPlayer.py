@@ -4,7 +4,7 @@ from time import sleep
 
 playlist = {'q':'http://rpi2020.btlan/music/pjonce.mp3',
             't':'http://rpi2020.btlan/music/spToday.mp3',
-            'o':'http://rpi2020.btlan/music/o.mp3',
+            'o':'http://rpi2020.btlan/music/youreWelcome.ma4',
             'd':'http://rpi2020.btlan/music/d.mp3',
             'j':'http://rpi2020.btlan/music/j.mp3',
             'z':'http://rpi2020.btlan/music/z.mp3',
@@ -18,7 +18,7 @@ livingRoom = SoCo('192.168.1.206')
 def playSonos(key):
     print('received: ' + key)
     print('Playing ' + playlist[key])
-    #livingRoom.play_uri(playlist[key])
+    livingRoom.play_uri(playlist[key])
 
 def stopSonos():
     print('Stopping Sonos...')
