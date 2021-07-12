@@ -1,40 +1,55 @@
 import keyboard
 from soco import SoCo
-from time import sleep
-
-playlist = {'q':'http://rpi2020.btlan/music/pjonce.mp3',
-            't':'http://rpi2020.btlan/music/spToday.mp3',
-            'o':'http://rpi2020.btlan/music/youreWelcome.ma4',
-            'd':'http://rpi2020.btlan/music/d.mp3',
-            'j':'http://rpi2020.btlan/music/j.mp3',
-            'z':'http://rpi2020.btlan/music/z.mp3',
-            'b':'http://rpi2020.btlan/music/b.mp3',
-            '.':'http://rpi2020.btlan/music/..mp3',
-            }
+import time 
 
 # initialise sonos
 livingRoom = SoCo('192.168.1.206')
 
+
+def setPlaylist(pl):
+    print('setting playlist: ' + pl)
+    livingRoom.clear_queue()
+    pl = livingRoom.get_sonos_playlist_by_attr('title', pl)
+    livingRoom.add_to_queue(pl)
+
 def playSonos(key):
-    print('received: ' + key)
-    print('Playing ' + playlist[key])
-    livingRoom.play_uri(playlist[key])
+
+    try:
+
+        #print('received: ' + str(key))  
+        livingRoom.play_from_queue(key)
+
+        print('Playing: ' + livingRoom.get_current_track_info()['artist'] + ':' + livingRoom.get_current_track_info()['title'])
+
+        trackTime = livingRoom.get_current_track_info()['duration']
+        trackTime_s = sum(x * int(t) for x, t in zip([3600, 60, 1], trackTime.split(":"))) 
+
+        print('turning off in:' + str(trackTime_s))
+        livingRoom.set_sleep_timer(trackTime_s-1)
+
+    except:
+        livingRoom.stop()
 
 def stopSonos():
     print('Stopping Sonos...')
     livingRoom.stop()
 
-keyboard.add_hotkey('q', lambda: playSonos('q'))
-keyboard.add_hotkey('t', lambda: playSonos('t'))
-keyboard.add_hotkey('o', lambda: playSonos('o'))
-keyboard.add_hotkey('d', lambda: playSonos('d'))
-keyboard.add_hotkey('j', lambda: playSonos('j'))
-keyboard.add_hotkey('z', lambda: playSonos('z'))
-keyboard.add_hotkey('b', lambda: playSonos('b'))
-keyboard.add_hotkey('.', lambda: playSonos('.'))
+
+keyboard.add_hotkey('F1', lambda: setPlaylist('Lena Anglais'))
+keyboard.add_hotkey('F2', lambda: setPlaylist('Simon'))
+
+
+keyboard.add_hotkey('q', lambda: playSonos(0))
+keyboard.add_hotkey('t', lambda: playSonos(1))
+keyboard.add_hotkey('o', lambda: playSonos(2))
+keyboard.add_hotkey('d', lambda: playSonos(3))
+keyboard.add_hotkey('j', lambda: playSonos(4))
+keyboard.add_hotkey('z', lambda: playSonos(5))
+keyboard.add_hotkey('b', lambda: playSonos(6))
+keyboard.add_hotkey('.', lambda: playSonos(7))
 
 keyboard.add_hotkey('space', lambda: stopSonos())
 keyboard.add_hotkey('enter', lambda: stopSonos())
 
 print('waiting for input...')
-keyboard.wait()
+keyboard.wait() 
