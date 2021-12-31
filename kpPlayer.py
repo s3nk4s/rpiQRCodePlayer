@@ -16,7 +16,7 @@ def playSonos(key):
 
     try:
 
-        #print('received: ' + str(key))  
+        print('received: ' + str(key))  
         livingRoom.play_from_queue(key)
 
         print('Playing: ' + livingRoom.get_current_track_info()['artist'] + ':' + livingRoom.get_current_track_info()['title'])
@@ -26,6 +26,7 @@ def playSonos(key):
 
         print('turning off in:' + str(trackTime_s))
         livingRoom.set_sleep_timer(trackTime_s-1)
+        #stopSonos()
 
     except:
         livingRoom.stop()
@@ -34,22 +35,21 @@ def stopSonos():
     print('Stopping Sonos...')
     livingRoom.stop()
 
-
-keyboard.add_hotkey('F1', lambda: setPlaylist('Lena Anglais'))
-keyboard.add_hotkey('F2', lambda: setPlaylist('Simon'))
-
-
-keyboard.add_hotkey('q', lambda: playSonos(0))
-keyboard.add_hotkey('t', lambda: playSonos(1))
-keyboard.add_hotkey('o', lambda: playSonos(2))
-keyboard.add_hotkey('d', lambda: playSonos(3))
-keyboard.add_hotkey('j', lambda: playSonos(4))
-keyboard.add_hotkey('z', lambda: playSonos(5))
-keyboard.add_hotkey('b', lambda: playSonos(6))
-keyboard.add_hotkey('.', lambda: playSonos(7))
+keyboard.add_hotkey('ctrl+shift+7', lambda: playSonos(0))
+keyboard.add_hotkey('ctrl+shift+6', lambda: playSonos(1))
+keyboard.add_hotkey('ctrl+shift+5', lambda: playSonos(2))
+keyboard.add_hotkey('ctrl+shift+4', lambda: playSonos(3))
+keyboard.add_hotkey('ctrl+shift+3', lambda: playSonos(4))
+keyboard.add_hotkey('ctrl+shift+2', lambda: playSonos(5))
+keyboard.add_hotkey('ctrl+shift+1', lambda: stopSonos())
 
 keyboard.add_hotkey('space', lambda: stopSonos())
 keyboard.add_hotkey('enter', lambda: stopSonos())
+
+keyboard.add_hotkey('F1', lambda: setPlaylist('Lena Anglais'))
+keyboard.add_hotkey('F2', lambda: setPlaylist('Lena Francais'))
+keyboard.add_hotkey('F3', lambda: setPlaylist('Simon'))
+
 
 print('waiting for input...')
 keyboard.wait() 
